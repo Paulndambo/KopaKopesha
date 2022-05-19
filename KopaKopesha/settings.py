@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_authtoken',
-    'jet',
-    'jet.dashboard',
     'phonenumber_field',
     'drf_yasg',
     'users',
