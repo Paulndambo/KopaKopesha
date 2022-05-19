@@ -30,12 +30,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_authtoken',
+    'jet',
+    'jet.dashboard',
     'phonenumber_field',
     'drf_yasg',
     'users',
     'loans',
     'savings',
 ]
+
+JET_DEFAULT_THEME = "light-gray"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,14 +74,24 @@ WSGI_APPLICATION = 'KopaKopesha.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'kopakopesha',
+        'USER': 'ndambo',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
