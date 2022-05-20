@@ -11,3 +11,9 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = "__all__"
+
+    """
+    def create(self, validated_data):
+        member = validated_data['member']
+        print(member)
+    """

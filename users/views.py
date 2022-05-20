@@ -4,6 +4,7 @@ from .serializers import MemberSerializer, UserSerializer
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from savings.serializers import SavingSerializer
 # Create your views here.
 class MemberViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -32,7 +33,7 @@ class MemberViewSet(viewsets.ModelViewSet):
             phone_number=phone_number,
             postal_code=postal_code, zip_code=zip_code,
             town=town, country=country
-        )
+        ) 
         
         return Response({"success": "Member Created Successfully"})
 

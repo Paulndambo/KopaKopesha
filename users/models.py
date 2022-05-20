@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from savings.models import Saving
 # Create your models here.
 class CustomUserManager(UserManager):
     def get_by_natural_key(self, username):
@@ -46,3 +49,11 @@ class Member(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+@receiver(post_save, sender=Member)
+def manage_policy(sender, instance, created=False, **kwargs):
+    if instance.user:
+        saving = Saving()
+        saving.member = instance
+        saving.save()
