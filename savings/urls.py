@@ -9,5 +9,5 @@ urlpatterns= [
     path("", include(router.urls)),
     path("transactions/", views.TransactionListCreateAPIView.as_view(), name="transactions"),
     path("member/<int:member_id>/transactions", views.MemberTransactionsListAPIView.as_view(), name="member-transactions"),
-    path("user-transactions/", views.UserSavingsAPIView.as_view(), name="user-transactions"),
+    #path("user-savings/<int:user_id>/", views.UserSavingsAPIView.as_view(), name="user-savings"),
 ]

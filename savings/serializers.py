@@ -17,3 +17,8 @@ class TransactionSerializer(serializers.ModelSerializer):
         member = validated_data['member']
         print(member)
     """
+
+class MemberTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ["id", "type", "amount", "created_at"]

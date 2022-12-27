@@ -6,9 +6,11 @@ from users.models import Member
 from .serializers import TransactionSerializer, SavingSerializer
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
 # Create your views here.
 class SavingViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser]
     queryset = Saving.objects.all()
     serializer_class = SavingSerializer
 
@@ -65,5 +67,3 @@ class UserSavingsAPIView(generics.GenericAPIView):
         savings = Saving.objects.filter(member=member)
         serializer = self.serializer_class(instance=savings, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    

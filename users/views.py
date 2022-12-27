@@ -4,7 +4,9 @@ from .serializers import MemberSerializer, UserSerializer
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from savings.serializers import SavingSerializer
+from savings.serializers import SavingSerializer, MemberTransactionSerializer
+from rest_framework.decorators import action
+from savings.models import Saving, Transaction
 # Create your views here.
 class MemberViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -37,6 +39,22 @@ class MemberViewSet(viewsets.ModelViewSet):
         
         return Response({"success": "Member Created Successfully"})
 
+
+class MemberProfileModelViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+
+    @action(detail=True, methods=["get", "GET"], url_path="savings", url_name="savings")
+    def get_member_savings(self, request, pk=None):
+        member_savings = Saving.objects.filter(member_id=pk)
+        serializer = SavingSerializer(instance=member_savings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["get", "GET"], url_path="transactions", url_name="transactions")
+    def get_member_transactions(self, request, pk=None):
+        member_transactions = Transaction.objects.filter(member_id=pk)
+        serializer = MemberTransactionSerializer(instance=member_transactions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UsersListAPIView(generics.GenericAPIView):
     queryset = User.objects.all()
