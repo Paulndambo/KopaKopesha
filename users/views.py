@@ -44,13 +44,19 @@ class MemberProfileModelViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
 
-    @action(detail=True, methods=["get", "GET"], url_path="savings", url_name="savings")
-    def get_member_savings(self, request, pk=None):
+    @action(detail=True, methods=["get", "GET", "post", "delete"], url_path="savings", url_name="savings")
+    def get_member_savings(self, request, pk=None, * args, **kwargs):
+
+        target_savings = kwargs
+        print("************Traget Savings*********************")
+        print(target_savings)
+        print("************Traget Savings*********************")
+
         member_savings = Saving.objects.filter(member_id=pk)
         serializer = SavingSerializer(instance=member_savings, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=["get", "GET"], url_path="transactions", url_name="transactions")
+    @action(detail=True, methods=["get", "GET", "delete"], url_path="transactions", url_name="transactions")
     def get_member_transactions(self, request, pk=None):
         member_transactions = Transaction.objects.filter(member_id=pk)
         serializer = MemberTransactionSerializer(instance=member_transactions, many=True)
